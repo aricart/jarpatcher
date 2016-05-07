@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/aricart/jarpatcher/aricart/jars"
+	"jars"
 	"flag"
 	"fmt"
 	"io/ioutil"
