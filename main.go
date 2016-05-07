@@ -3,12 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/aricart/jarpatcher/jars"
 	"io/ioutil"
 	"log"
 	"sync"
 	"time"
-
-	"github.com/aricart/jarpatcher/jars"
 )
 
 func usage() {
