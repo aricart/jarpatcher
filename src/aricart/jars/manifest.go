@@ -14,6 +14,7 @@ type Manifest struct {
 	Map map[string]string
 }
 
+// Construct a Manifest from a string representation
 func (m *Manifest) Parse(s string) {
 	if m.Map == nil {
 		m.Map = make(map[string]string)
@@ -27,6 +28,7 @@ func (m *Manifest) Parse(s string) {
 	}
 }
 
+// Print all the headers in the Manifest
 func (m *Manifest) PrintHeaders() {
 	fmt.Printf("%s=%d\n", "Headers found in Manifest", len(m.Map))
 	for k, v := range m.Map {
@@ -35,6 +37,7 @@ func (m *Manifest) PrintHeaders() {
 	}
 }
 
+// Return the Bundle-SymbolicName in the Manifest or nil.
 func (m *Manifest) BundleSymbolicName() string {
 	v := m.Map["Bundle-SymbolicName"]
 	index := strings.IndexRune(v, ';')
@@ -44,6 +47,7 @@ func (m *Manifest) BundleSymbolicName() string {
 	return v
 }
 
+// Loads a jar and reads its manifest if it exist returning a Manifest
 func ParseJar(fileName string) (*Manifest, string) {
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
 		fmt.Printf("No such file or directory: %s\n", fileName)
