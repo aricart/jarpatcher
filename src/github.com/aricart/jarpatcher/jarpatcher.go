@@ -7,7 +7,7 @@ import (
 	"log"
 	"sync"
 	"time"
-	
+
 	"github.com/aricart/jarpatcher/jars"
 )
 
