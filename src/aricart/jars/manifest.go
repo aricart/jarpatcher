@@ -10,11 +10,12 @@ import (
 	"strings"
 )
 
+// A Manifest here is simply just a map of Manifest headers to their values
 type Manifest struct {
 	Map map[string]string
 }
 
-// Construct a Manifest from a string representation
+// Parse a Manifest from a string representation
 func (m *Manifest) Parse(s string) {
 	if m.Map == nil {
 		m.Map = make(map[string]string)
@@ -28,7 +29,7 @@ func (m *Manifest) Parse(s string) {
 	}
 }
 
-// Print all the headers in the Manifest
+// PrintHeaders prints the headers and values in the manifest
 func (m *Manifest) PrintHeaders() {
 	fmt.Printf("%s=%d\n", "Headers found in Manifest", len(m.Map))
 	for k, v := range m.Map {
@@ -37,7 +38,7 @@ func (m *Manifest) PrintHeaders() {
 	}
 }
 
-// Return the Bundle-SymbolicName in the Manifest or nil.
+// BundleSymbolicName returns the Bundle-SymbolicName in the Manifest or nil.
 func (m *Manifest) BundleSymbolicName() string {
 	v := m.Map["Bundle-SymbolicName"]
 	index := strings.IndexRune(v, ';')
@@ -47,7 +48,7 @@ func (m *Manifest) BundleSymbolicName() string {
 	return v
 }
 
-// Loads a jar and reads its manifest if it exist returning a Manifest
+// ParseJar opens a jar, extracts and parses the Manifest file
 func ParseJar(fileName string) (*Manifest, string) {
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
 		fmt.Printf("No such file or directory: %s\n", fileName)
@@ -100,7 +101,8 @@ func ParseJar(fileName string) (*Manifest, string) {
 	return &retVal, ""
 }
 
-// Returns a map of file names to Manifest entries
+// FindBundles examines all the jars in a file or directory and returns a
+// map of all bundles it finds.
 func FindBundles(path string) (*map[string]string, int) {
 	var pathToJar = make(map[string]string)
 	var counter = 0

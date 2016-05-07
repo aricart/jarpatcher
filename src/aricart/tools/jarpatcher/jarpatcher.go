@@ -41,10 +41,10 @@ func main() {
 	// for each source file, if the file is on the destination replace it
 	toReplace := 0
 	replaced = 0
-	for sourcePath, bundleId := range *sourceJars {
-		var matches []string = work[bundleId]
+	for sourcePath, bundleID := range *sourceJars {
+		var matches = work[bundleID]
 		if matches != nil {
-			patch(bundleId, sourcePath, matches)
+			patch(bundleID, sourcePath, matches)
 			toReplace += len(matches)
 		}
 	}
@@ -60,7 +60,7 @@ func main() {
 
 }
 
-func patch(bundleId string, src string, targets []string) {
+func patch(bundleID string, src string, targets []string) {
 	data, err := ioutil.ReadFile(src)
 	if err != nil {
 		log.Fatal(err)
@@ -77,7 +77,7 @@ func patch(bundleId string, src string, targets []string) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("[R] %s: %s\n", bundleId, target)
+			fmt.Printf("[R] %s: %s\n", bundleID, target)
 			replaced++
 		}()
 	}
@@ -87,7 +87,7 @@ func patch(bundleId string, src string, targets []string) {
 func invert(src map[string]string) map[string][]string {
 	retVal := make(map[string][]string)
 	for k, v := range src {
-		var a []string = retVal[v]
+		var a = retVal[v]
 		if a == nil {
 			a = make([]string, 0, 0)
 		}
